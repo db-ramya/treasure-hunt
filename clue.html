@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Office Treasure Hunt</title>
+
+<style>
+body{
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg,#4facfe,#00f2fe);
+    height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:0;
+}
+
+.container{
+    background:white;
+    padding:40px;
+    border-radius:15px;
+    width:500px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+
+h1{
+    color:#333;
+    margin-bottom:10px;
+}
+
+.question{
+    font-size:18px;
+    margin:20px 0;
+    color:#555;
+}
+
+button{
+    background:#4facfe;
+    color:white;
+    border:none;
+    padding:12px 25px;
+    font-size:16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    background:#2b7cff;
+}
+
+.hint{
+    margin-top:20px;
+    font-size:14px;
+    color:#888;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🕵️ Treasure Hunt</h1>
+
+<div class="question">
+I am a place where coffee lovers gather.<br>
+People chat, laugh and take breaks here.<br><br>
+
+<strong>Where am I?</strong>
+</div>
+
+<button onclick="showHint()">Need a Hint?</button>
+
+<div id="hint" class="hint"></div>
+
+</div>
+
+
+<script>
+
+function showHint(){
+    document.getElementById("hint").innerText =
+    "Sometimes the answer is hidden deeper than the page...";
+}
+
+// Console clue for curious developers
+console.log("👀 Curious minds open Inspect.");
+console.log("But the real clue is hidden somewhere in the HTML...");
+
+
+// Hidden variable clue
+var secretClue = "Next Location: CAFETERIA";
+
+</script>
+
+
+<!-- 
+🎉 SECRET CLUE FOR DEVELOPERS 🎉
+
+NEXT LOCATION: CAFETERIA
+
+If you found this, tell the game master:
+CODE WORD: PORTAL-CHAMPION
+
+-->
+
+</body>
+</html>
