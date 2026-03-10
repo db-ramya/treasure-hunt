@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +22,7 @@ h1{
     width:420px;
     margin:40px auto;
     display:grid;
-    grid-template-columns:repeat(5,1fr);
+    grid-template-columns:repeat(5,1fr); /* 5x5 grid */
     gap:12px;
 }
 
@@ -34,17 +33,10 @@ h1{
     border-radius:10px;
     cursor:pointer;
     transition:0.3s;
-    display:flex;
-    align-items:center;
-    justify-content:center;
 }
 
 .card:hover{
     transform:scale(1.05);
-}
-
-.revealed{
-    transform:rotateY(180deg);
 }
 
 .matched{
@@ -74,6 +66,8 @@ h1{
 
 <script>
 
+/* 12 pairs + 1 bonus card = 25 */
+
 const colors = [
 "#ef4444","#ef4444",
 "#f59e0b","#f59e0b",
@@ -87,7 +81,7 @@ const colors = [
 "#6366f1","#6366f1",
 "#f97316","#f97316",
 "#06b6d4","#06b6d4",
-"#a855f7"
+"#000000"  // bonus card
 ];
 
 let shuffled = colors.sort(()=>0.5-Math.random());
@@ -99,7 +93,7 @@ let matches=0;
 
 const grid=document.getElementById("grid");
 
-shuffled.forEach((color,index)=>{
+shuffled.forEach(color=>{
 
 let card=document.createElement("div");
 card.classList.add("card");
@@ -117,6 +111,11 @@ function flip(card){
 if(lock || card.classList.contains("matched")) return;
 
 card.style.background=card.dataset.color;
+
+if(card.dataset.color=="#000000"){
+card.classList.add("matched");
+return;
+}
 
 if(!first){
 first=card;
@@ -165,29 +164,47 @@ let msg=document.getElementById("message");
 msg.style.opacity=1;
 
 msg.innerHTML=`
+<h1>🎉 Congrats! You completed the game 🎉</h1>
+<p>Preparing your next clue...</p>
+`;
 
-<h2>✨ A Hidden Message Appears...</h2>
+setTimeout(()=>{
 
-<p>
-In one corner of the office, work sometimes fades away
-and laughter begins to grow louder.
-Screens glow brightly while friendly battles unfold.
-</p>
+msg.innerHTML=`
 
-<p>
-Buttons are pressed, victories celebrated,
-and rivals are made in moments.
-Some go there to relax,
-others to prove their gaming skills.
-</p>
+<h1>Next Clue</h1>
 
 <p>
-Seek the place where controllers rule
-and digital worlds come alive.
-Your next clue waits there.
+
+1n 0n3 c0rn3r 0f th3 0ff1c3, w0rk s0m3t1m3s fad3s away  
+and laugh t3r b3g1ns t0 gr0w l0ud3r.  
+Scr33ns gl0w br1ghtly wh1l3 fr13ndly battl3s unf0ld.
+
+<br><br>
+
+Butt0ns ar3 pr3ss3d,  
+v1ct0r13s c3l3brat3d,  
+and r1vals ar3 mad3 1n m0m3nts.
+
+<br><br>
+
+S0m3 g0 th3r3 t0 r3lax,  
+0th3rs t0 pr0v3 th31r gam1ng sk1lls.
+
+<br><br>
+
+S33k th3 plac3 wh3r3 c0ntr0ll3rs rul3  
+and d1g1tal w0rlds c0m3 al1v3.
+
+<br><br>
+
+<strong>Y0ur n3xt clu3 wa1ts th3r3.</strong>
+
 </p>
 
 `;
+
+},3000);
 
 }
 
