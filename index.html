@@ -1,111 +1,197 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Office Treasure Hunt</title>
+<title>Treasure Hunt Memory Game</title>
 
 <style>
-body{
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg,#4facfe,#00f2fe);
-    height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:0;
-}
 
-.container{
-    background:white;
-    padding:40px;
-    border-radius:15px;
-    width:500px;
+body{
+    font-family:'Segoe UI',sans-serif;
+    background:linear-gradient(135deg,#1f2937,#111827);
+    color:white;
     text-align:center;
-    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    padding-top:30px;
 }
 
 h1{
-    color:#333;
-    margin-bottom:10px;
+    font-size:34px;
 }
 
-.question{
-    font-size:18px;
-    margin:20px 0;
-    color:#555;
+.grid{
+    width:420px;
+    margin:40px auto;
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:12px;
 }
 
-button{
-    background:#4facfe;
-    color:white;
-    border:none;
-    padding:12px 25px;
-    font-size:16px;
-    border-radius:8px;
+.card{
+    width:70px;
+    height:70px;
+    background:#374151;
+    border-radius:10px;
     cursor:pointer;
     transition:0.3s;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
-button:hover{
-    background:#2b7cff;
+.card:hover{
+    transform:scale(1.05);
 }
 
-.hint{
-    margin-top:20px;
-    font-size:14px;
-    color:#888;
+.revealed{
+    transform:rotateY(180deg);
 }
+
+.matched{
+    border:3px solid #10b981;
+}
+
+#message{
+    max-width:700px;
+    margin:40px auto;
+    font-size:20px;
+    line-height:1.6;
+    opacity:0;
+    transition:opacity 1.5s;
+}
+
 </style>
-
 </head>
 
 <body>
 
-<div class="container">
+<h1>🔎 Treasure Hunt Memory Challenge</h1>
+<p>Match the colors to unlock the next clue</p>
 
-<h1>🕵️ Treasure Hunt</h1>
+<div class="grid" id="grid"></div>
 
-<div class="question">
-I am a place where coffee lovers gather.<br>
-People chat, laugh and take breaks here.<br><br>
-
-<strong>Where am I?</strong>
-</div>
-
-<button onclick="showHint()">Need a Hint?</button>
-
-<div id="hint" class="hint"></div>
-
-</div>
-
+<div id="message"></div>
 
 <script>
 
-function showHint(){
-    document.getElementById("hint").innerText =
-    "Sometimes the answer is hidden deeper than the page...";
+const colors = [
+"#ef4444","#ef4444",
+"#f59e0b","#f59e0b",
+"#10b981","#10b981",
+"#3b82f6","#3b82f6",
+"#8b5cf6","#8b5cf6",
+"#ec4899","#ec4899",
+"#22c55e","#22c55e",
+"#eab308","#eab308",
+"#14b8a6","#14b8a6",
+"#6366f1","#6366f1",
+"#f97316","#f97316",
+"#06b6d4","#06b6d4",
+"#a855f7"
+];
+
+let shuffled = colors.sort(()=>0.5-Math.random());
+
+let first=null;
+let second=null;
+let lock=false;
+let matches=0;
+
+const grid=document.getElementById("grid");
+
+shuffled.forEach((color,index)=>{
+
+let card=document.createElement("div");
+card.classList.add("card");
+
+card.dataset.color=color;
+
+card.onclick=()=>flip(card);
+
+grid.appendChild(card);
+
+});
+
+function flip(card){
+
+if(lock || card.classList.contains("matched")) return;
+
+card.style.background=card.dataset.color;
+
+if(!first){
+first=card;
+return;
 }
 
-// Console clue for curious developers
-console.log("👀 Curious minds open Inspect.");
-console.log("But the real clue is hidden somewhere in the HTML...");
+second=card;
+lock=true;
 
+if(first.dataset.color===second.dataset.color){
 
-// Hidden variable clue
-var secretClue = "Next Location: CAFETERIA";
+first.classList.add("matched");
+second.classList.add("matched");
+
+matches++;
+
+reset();
+
+if(matches===12){
+setTimeout(showClue,800);
+}
+
+}else{
+
+setTimeout(()=>{
+
+first.style.background="#374151";
+second.style.background="#374151";
+
+reset();
+
+},700);
+
+}
+
+}
+
+function reset(){
+[first,second,lock]=[null,null,false];
+}
+
+function showClue(){
+
+let msg=document.getElementById("message");
+
+msg.style.opacity=1;
+
+msg.innerHTML=`
+
+<h2>✨ A Hidden Message Appears...</h2>
+
+<p>
+In one corner of the office, work sometimes fades away
+and laughter begins to grow louder.
+Screens glow brightly while friendly battles unfold.
+</p>
+
+<p>
+Buttons are pressed, victories celebrated,
+and rivals are made in moments.
+Some go there to relax,
+others to prove their gaming skills.
+</p>
+
+<p>
+Seek the place where controllers rule
+and digital worlds come alive.
+Your next clue waits there.
+</p>
+
+`;
+
+}
 
 </script>
-
-
-<!-- 
-🎉 SECRET CLUE FOR DEVELOPERS 🎉
-
-NEXT LOCATION: CAFETERIA
-
-If you found this, tell the game master:
-CODE WORD: PORTAL-CHAMPION
-
--->
 
 </body>
 </html>
