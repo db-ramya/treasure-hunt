@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Treasure Hunt Memory Game</title>
 
 <style>
@@ -12,23 +15,25 @@ body{
     color:white;
     text-align:center;
     padding-top:30px;
+    margin:0;
 }
 
 h1{
-    font-size:34px;
+    font-size:32px;
 }
 
 .grid{
-    width:420px;
+    width:90%;
+    max-width:420px;
     margin:40px auto;
     display:grid;
-    grid-template-columns:repeat(5,1fr); /* 5x5 grid */
+    grid-template-columns:repeat(5,1fr);
     gap:12px;
 }
 
 .card{
-    width:70px;
-    height:70px;
+    width:100%;
+    aspect-ratio:1;
     background:#374151;
     border-radius:10px;
     cursor:pointer;
@@ -50,6 +55,7 @@ h1{
     line-height:1.6;
     opacity:0;
     transition:opacity 1.5s;
+    padding:0 20px;
 }
 
 </style>
